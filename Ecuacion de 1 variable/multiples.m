@@ -6,9 +6,9 @@ format long;%format long permite utilizar la maxima capacidad del computador
 
 
 Xo = input ('ingrese el valor inicial\n');
-Iter = input ('\ningrese el n�mero de iteraciones\n');
+Iter = input ('\ningrese el numero de iteraciones\n');
 Tol = input ('\ningrese la tolerancia que desea\n');
-F = input ('\ningrese la funci�n en comillas simples\n');
+F = input ('\ningrese la funcion en comillas simples\n');
 
 f = inline(F);%El comando inline permite hacer la asignacion posterior de variables en una funcion
 
@@ -49,11 +49,11 @@ end
 
 if Y1==0
     fprintf('\n\nSOLUCION:\n')
-    fprintf('%G es ra�z\n\n',Xo);
+    fprintf('%G es raiz\n\n',Xo);
 else
     if Error<Tol
         fprintf('\n\nSOLUCION:\n')
-        fprintf( '%g es una aproximacion a una ra�z con una tolerancia %g \n\n',Xo,Tol)
+        fprintf( '%g es una aproximacion a una raiz con una tolerancia %g \n\n',Xo,Tol)
     else
         if Denominador==0
             fprintf('\n\nSOLUCION:\n')
@@ -64,7 +64,7 @@ else
         end
     end
 end
-fprintf('TABLA\n\n Cont                   Xn                  f(Xn)              f�(Xn)                f��(Xn)              Error Relativo\n\n');
+fprintf('TABLA\n\n Cont                   Xn                  f(Xn)              f1(Xn)                f2(Xn)              Error Relativo\n\n');
 disp(Z1);
 disp(Z);%La funcion disp permite visualizar la tabla
 ezplot(f);%Muestra la funcion graficada
