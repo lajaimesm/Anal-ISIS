@@ -1,40 +1,77 @@
-disp("SECANTE");
+% METODO DE LA SECANTE
 
-%vbles entrada
-f=input('Ingresar función en términos de x: ','s');
-f=inline(f);
-tol=input('Ingrese la tolerancia : ');
-x0=input('Ingrese primer valor inicial: ');
-x1=input('Ingrese el segundo valor inicial: ');
-niter=input('Ingrese iteraciones: ');
-fx0=f(x0);
+fprintf('METODO DE LA SECANTE\n\n\n');
 
-if fx0==0
-  disp([num2str(x0)," es cero para la función ingresada."]) 
+format long;%format long permite utilizar la mï¿½xima capacidad del computador
+
+Xo = input('ingrese xo\n');
+X1 = input('\ningrese x1\n');
+Tol = input('\ningrese la tolerancia\n');
+Iter = input('\ningrese el nï¿½mero de iteraciones\n');
+Fun = input('\ningrese la funciï¿½n entre comillas simples\n');
+
+f=inline (Fun); %El comando inline permite hacer la asignaciï¿½n posterior de variables en una funcion
+
+yo=f(Xo);
+
+if yo == 0
+    fprintf('\n\nSOLUCION:\n')
+    fprintf('xo es raiz\n');
+
 else
-  fx1=f(x1);
-  count=0;
-  error=tol+1;
-  den=fx1-fx0;
-end
+    y1 =f(X1);
+    d =(y1-yo);
+    e =Tol+1;
+    cont =0;
+    Z1 = [cont,X1, y1, e];
+    Z = [cont,X1, y1, e];
+    %Z es una matriz la cual permitira observar lo datos como una tabla al final del programa
 
-  while error>tol && fx1~=0 && den~=0 && count<niter
-    x2=x1-fx1*(x1-x0)/den;
-    error=abs(x2-x1);
-    x0=x1;
-    fx0=fx1;
-    x1=x2;
-    fx1=f(x1);
-    den=fx1-fx0;
-    count=count+1;
-  end
-  
-  if fx1==0
-    disp([num2str(x1)," Es cero para la función."])
-  elseif error<tol
-    disp([num2str(x1)," Es un valor aproximado a cero con una tolerancia de: ",num2str(tol)])
-  elseif den==0
-    disp("Hay una posible raíz multiple.")
-  else
-    disp("No se encontraron ceros con los datos ingresados.")
-  end
+    while y1~=0 & e>Tol && cont<Iter && d~=0
+
+        X2 =  X1-((y1*(X1-Xo))/(d));
+        e = abs((X2-X1)/X2);
+        %e = abs(X2-X1);
+        Xo = X1;
+        yo = y1;
+        y1 = f(X2);
+        X1 = X2;
+        d = (y1-yo);
+        cont = cont+1;
+        Z(cont,1) = cont;
+        Z(cont,2) = X1;
+        Z(cont,3) = y1;
+        Z(cont,4) = e;
+        %las z son las posiciones asignadas en la tabla a los resultados que se observaron
+        
+    end
+
+    if y1 == 0
+        fprintf('\n\nSOLUCION:\n')
+        fprintf('%g es raï¿½z\n\n',X1);
+    else
+        if e < Tol
+            fprintf('\n\nSOLUCION:\n')
+            fprintf( '%g es una aproximacion a una raï¿½z con una tolerancia %g \n\n',X1,Tol)
+        else
+            if d == 0
+                fprintf('\n\nSOLUCION:\n')
+                fprintf('el denominador es cero, FRACASO\n\n');
+            else
+                fprintf('\n\nSOLUCION:\n')
+                fprintf('Fracaso en %g iteraciones\n\n',Iter);
+            end
+        end
+    end
+end
+fprintf('TABLA\n\ninteraciones               Xn               y1                 Error relativo\n\n');
+disp(Z1);
+disp(Z);
+%ezplot(f);
+fplot(f,[-1 15]); %Muestra la funcion graficada
+
+
+grid on %Muestra cuadricula en la grafica de la funcion
+
+
+

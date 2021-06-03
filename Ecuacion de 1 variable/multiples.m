@@ -1,51 +1,74 @@
-disp('RAÍCES MULTIPLES')
+%METODO RAICES MULTIPLES
 
-%vbles entrada
-tol=input('Inserte la tolerancia: ');
-f=input('Inserte la función: ','s');
-xo=input('Inserte el valor inicial: ');
-niter=input('Inserte iteraciones: ');
+fprintf('METODO RAICES MULTIPLES\n\n\n');
 
-fx=inline(f);
-fxo=fx(xo);
-df=input('Inserte la primer derivada de la función: ','s');
-dfx=inline(df);
-dfxo=dfx(xo);
-dff=input('Inserte la segunda derivada de la función: ','s');
-dffx=inline(dff);
-dffxo=dffx(xo);
+format long;%format long permite utilizar la mï¿½xima capacidad del computador
 
 
-Xo=disp(xo);
-F=disp(f);
-dF=disp(df);
-T=disp(tol);
-N=disp(niter);
+Xo = input ('ingrese el valor inicial\n');
+Iter = input ('\ningrese el nï¿½mero de iteraciones\n');
+Tol = input ('\ningrese la tolerancia que desea\n');
+F = input ('\ningrese la funciï¿½n en comillas simples\n');
 
-printf('f(xo) = %f.\n\n',fxo)
-fprintf('\n cont         xm                e \n')
+f = inline(F);%El comando inline permite hacer la asignacion posterior de variables en una funcion
 
-cont=0;
-e=tol+1;
 
-while ((e>tol && fxo~=0) && dfxo~=0) && cont<niter
-  den=(dfxo^2)-(fxo*dffxo);
-  x1=xo-((fxo)*(dfxo))/den;
-  fxo=fx(x1);
-  dfxo=dfx(x1);
-  dffxo=dffx(x1);
-  e=abs(x1-xo);
-  xo=x1;
-  fprintf('\n %g        %10.10f          %10.10f \n',cont,xo,e)
-  cont=cont+1;
+Y1 = f(Xo);
+Di = diff (F); %Calculando la derivada de la funcion F
+Der = char(Di);%regresa los valores a texto
+De = inline(Der);
+D = De(Xo);%Se evalua la derivada en la X inicial, y asi saber si es adecuada para ejecutar el resto del metodo.
+Di2 = diff(F,2);%Calculando la segunda derivada de la funcion F
+Der2 = char(Di2);
+Deri2 = inline (Der2);
+D2 = Deri2 (Xo);%Se evalua la segunda derivada en la X inicial, y asi saber si es adecuada para ejecutar el resto del metodo.
+Error = Tol+1;
+Cont = 0;
+Denominador =D^2-(Y1*D2);
+Z1 = [Cont, Xo, Y1, D, Error];
+Z = [Cont, Xo, Y1, D, Error];%Z es una matriz la cual permitira observar lo datos como una tabla al final del programa
+
+while Y1~=0 && Error > Tol && Cont < Iter && Denominador~=0
+
+    X1=Xo-((Y1*D)/(D^2-(Y1*D2)));
+    Y1=f(X1);
+    D=De(X1);
+    D2=Deri2(X1);
+    Error=abs((X1-Xo)/X1);
+    Cont=Cont+1;
+    Z(Cont,1)=Cont;
+    Z(Cont,2)=Xo;
+    Z(Cont,3)=Y1;
+    Z(Cont,4)=D;
+    Z(Cont,5)=D2;
+    Z(Cont,6)=Error;
+    %las z son las posiciones asignadas en la tabla a los resultados que se observaron
+   
+    Xo=X1;
 end
 
-if fxo==0
-  printf('xo=%i es una raíz',xo)
-elseif e<tol
-  printf('x1=%f es una aproximación a una raíz con una tolerancia de %e',x1,tol)
-elseif den==0
-  printf('x1=%f ies una posible raíz multiple',x1)
-else 
-  printf('Falló en %i iteraciones',niter)
+if Y1==0
+    fprintf('\n\nSOLUCION:\n')
+    fprintf('%G es raï¿½z\n\n',Xo);
+else
+    if Error<Tol
+        fprintf('\n\nSOLUCION:\n')
+        fprintf( '%g es una aproximacion a una raï¿½z con una tolerancia %g \n\n',Xo,Tol)
+    else
+        if Denominador==0
+            fprintf('\n\nSOLUCION:\n')
+            fprintf('Se estï¿½ haciendo divisiï¿½n por cero\n\n')
+        else
+            fprintf('\n\nSOLUCION:\n')
+            fprintf('Fracaso en %g iteraciones\n\n',Iter);
+        end
+    end
 end
+fprintf('TABLA\n\n Cont                   Xn                  f(Xn)              fï¿½(Xn)                fï¿½ï¿½(Xn)              Error Relativo\n\n');
+disp(Z1);
+disp(Z);%La funcion disp permite visualizar la tabla
+ezplot(f);%Muestra la funcion graficada
+grid on %muestra cuadricula en la grafica de la funcion
+
+
+

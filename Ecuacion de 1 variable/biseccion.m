@@ -1,78 +1,85 @@
-disp('BISECCIÓN')
+%METODO DE BISECCION
 
-%Variables de entrada
+fprintf ('METODO DE BISECCION\n\n\n');
 
-xi=input('Inserte Intervalo mínimo: ');
-xs=input('Inserte Intervalo máximo: ');
-f=input('Inserte Función: ','s');
-tol=input('Inserte tolerancia: ');
-niter=input('Inserte iteraciones: ');
+format long%format long permite utilizar la maxima capacidad del computador
 
+Xi=input ('Ingrese el limite inferior del intervalo\n');
+Xs=input ('\nIngrese el limite superior del intervalo\n');
+Tol=input ('\nIngrese la tolerancia deseada\n');
+Iter=input ('\nIngrese el numero de iteraciones\n');
+Fun=input ('\nIngrese la funcion entre comillas simples\n');
 
-fx=inline(f,'x');
-fxi=fx(xi);
-fxs=fx(xs);
-
-Xi=disp(xi);
-Xs=disp(xs);
-F=disp(f);
-T=disp(tol);
-N=disp(niter);
-printf('f(Xi) = %f. \n\n',fxi);
-printf('f(Xs) = %f. \n\n',fxs);
+f = inline (Fun);%El comando inline permite hacer la asignacion posterior de variables en una funcion.
 
 
-disp('----------------------------------------------------------');
+Yi = f(Xi);
+Ys = f(Xs);
 
-fprintf('\n cont         xm                e \n');
-
-
-
-if fxi==0
-  printf('Xi = %i es una raíz',xi)
-elseif fxs==0
-  printf('Xs = %i es una raíz',xs)
-elseif fxi*fxs<0
-  xm=(xi+xs)/2;
-  fxm=fx(xm);
-  cont=1;
-  e=tol+1;  
-end  
-
-  while (e>tol && fxm~=0) && cont<=niter
-    if fxi*fxm<0
-      xs=xm;
-      fxs=fxm;
+if Yi == 0
+    fprintf('\n\nSOLUCION:\n')
+    fprintf('Xi es raiz\n\n');
+else
+    if Ys == 0
+        fprintf('\n\nSOLUCION:\n')
+        fprintf('Xs es raiz\n\n');
     else
-      xi=xm;
-      fxi=fxm;
-     endif
-     xaux=xm;
-     xm=(xi+xs)/2;
-     fxm=fx(xm);
-     e=abs(xm-xaux);
-     fprintf('\n %g        %10.10f          %10.10f \n',cont,xm,e)
-     cont=cont+1;
-    end 
+        if Yi*Ys < 0
+            Xm = (Xi+Xs)/2;
+            Ym = f(Xm);
+            Error = Tol+1;
+            Cont = 1;
+            Z = [Cont,Xi,Xs,Xm,Ym,Yi*Ym,Ym*Ys,Error];
+            %Z es una matriz la cual permitira observar lo datos como una tabla al final del programa
 
-  if fxm==0
-    printf('Xm = %i es una raíz',xm)
-  elseif e<tol
-    printf('Xm = %i es una aproximación con una toleracia de %e',xm,tol)
-  else
-    printf('Falló en %i iteraciones',niter)
-  end
-  
-  %disp('El intervalo es inadecuado')
+            while Ym~=0 && Error>Tol && Cont<Iter
+                if Yi*Ym<0
+                    Xs=Xm;
+                    Ys=Ym;
+                else
+                    Xi=Xm;
+                    Yi=Ym;
+                end
+                Xaux = Xm;
+                Xm = (Xi+Xs)/2;
+                Ym = f(Xm);
+                Error = abs(Xm-Xaux);
+                Cont = Cont+1;
+                Z(Cont,1) = Cont;
+                Z(Cont,2) = Xi;
+                Z(Cont,3) = Xs;
+                Z(Cont,4) = Xm;
+                Z(Cont,5) = Ym;
+                Z(Cont,6) = Yi*Ym;
+                Z(Cont,7) = Ym*Ys;
+                Z(Cont,8) = Error;
+
+                %las z son las posiciones asignadas en la tabla a los resultados que se observaron
+                
+            end
+            if Ym == 0
+                fprintf('\n\nSOLUCION:\n')
+                fprintf('%g es raï¿½z\n\n',Xm);
+            else
+                if Error<Tol
+                    fprintf('\n\nSOLUCION:\n')
+                    fprintf( '%g es una aproximacion a una raï¿½z con una tolerancia %g \n\n',Xm,Tol);
+                else
+                    fprintf('\n\nSOLUCION:\n')
+                    fprintf('Fracaso en %g iteraciones\n\n',Iter);
+                end
+            end
+        else
+            fprintf('\n\nSOLUCION:\n')
+            fprintf('El intervalo es inadecuado\n\n');
+        end
+    end
 end
+fprintf('TABLA\n\nIteraciones              Xi                 Xs                 Xm                  Ym                  Yi*Ym \n\nYm*Ys               Error Absoluto\n\n');
+
+disp(Z);
+
+fplot(f); %Muestra la funcion graficada
+grid on %muestra cuadricula en la grafica de la funcion
 
 
-
-%GRAFICO DE LA FUNCIÓN
-
-ezplot(f)
-
-stem(cont,e)
-
-
-grid on

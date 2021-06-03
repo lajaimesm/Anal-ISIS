@@ -1,44 +1,72 @@
-disp('MÉTODO DE NEWTON')
+%METODO DE NEWTON
 
-%vbles de entrada
-tol=input('Inserte tolerancia: ');
-f=input('Inserte la función: ','s');
-xo=input('Inserte valor inicial: ');
-niter=input('Inserte iteraciones: ');
+fprintf('METODO DE NEWTON\n\n\n');
 
-fx=inline(f);
-fxo=fx(xo);
-df=input('Inserte la primera derivada de la función: ','s');
-dfx=inline(df);
-dfxo=dfx(xo);
+format long;  %format long permite utilizar la maxima capacidad del computador
 
-Xo=disp(xo);
-F=disp(f);
-dF=disp(df);
-T=disp(tol);
-N=disp(niter);
-printf('f(xo) = %f.\n\n',fxo)
+Xo = input ('ingrese el valor inicial\n');
+Iter = input ('\ningrese el numero de iteraciones\n');
+Tol = input ('\ningrese la tolerancia que desea\n');
+F = input ('\ningrese la funcion en comillas simples\n');
 
-fprintf('\n cont         xm                e \n')
-cont=0;
-e=tol+1;
+f=inline(F);%El comando inline permite hacer la asignacion posterior de variables en una funcion
 
-while ((e>tol && fxo~=0) && dfxo~=0) && cont<niter
-  x1=xo-(fxo/dfxo);
-  fxo=fx(x1);
-  dfxo=dfx(x1);
-  e=abs(x1-xo);
-  xo=x1;
-  fprintf('\n %g        %10.10f          %10.10f \n',cont,xo,e)
-  cont=cont+1;
+Y1 = f(Xo);
+Derivada = diff(F)%Se esta calculando la derivada de la funcion F
+Der = char(Derivada);%Convierte los valores a texto
+D = inline(Der);
+De = D(Xo);%Se evalua la derivada en la X inicial, y asi saber si es adecuada para
+%ejecutar el resto del metodo, es decir si es diferente de cero.
+Error = Tol+1;
+Cont = 0;
+Z1 = [Cont, Xo, Y1, De, Error];
+
+%Z es una matriz la cual permitira observar lo datos como una tabla al final del programa
+Z= [Cont, Xo, Y1, De, Error];
+
+while Y1~=0 && Error>Tol && Cont<Iter && De~=0
+    X1 = Xo-(Y1/De);
+    Y1 = f(X1);
+    De = D(X1);
+    Error = abs((X1-Xo)/X1);
+    Cont = Cont+1;
+    Z(Cont,1) = Cont;
+    Z(Cont,2) = Xo;
+    Z(Cont,3) = Y1;
+    Z(Cont,4) = De;
+    Z(Cont,5) = Error;
+    %las z son las posiciones asignadas en la tabla a los resultados que se observaron
+   
+    Xo=X1;
+
 end
 
-if fxo==0
-  printf('xo=%i es una raíz',xo)
-elseif e<tol
-  printf('x1=%f es una aproximación de una raíz con tolerancia de %e',x1,tol)
-elseif dfxo==0
-  printf('x1=%f es una posible raíz multiple',x1)
-else 
-  printf('Falló en %i iteraciones',niter)
+if Y1==0
+    fprintf('\n\nSOLUCION:\n')
+    fprintf('%g es raï¿½z\n\n',Xo);
+else
+    if Error<Tol
+        fprintf('\n\nSOLUCION:\n')
+        fprintf( '%g es una aproximacion a una raï¿½z con una tolerancia %g \n\n',Xo,Tol)
+    else
+        if De==0
+            fprintf('\n\nSOLUCION:\n')
+            fprintf('Se esta haciendo divisiï¿½n por cero y Xo posiblemente es una raiz multiple\n\n')
+        else
+            fprintf('\n\nSOLUCION:\n')
+            fprintf('Fracaso en %g iteraciones\n\n',Iter);
+        end
+    end
 end
+
+fprintf('TABLA\n\n Cont                  Xn                   f(Xn)               fï¿½(Xn)               Error relativo\n\n');
+disp(Z1);
+disp(Z);
+
+ezplot(f);%Muestra la funcion graficada
+
+
+grid on %muestra cuadricula en la grafica de la funcion
+
+
+

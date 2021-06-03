@@ -1,65 +1,82 @@
+%REGLA FALSA
 
-disp('REGLA FALSA')
+fprintf('METODO REGLA FALSA\n\n\n');
+format long;%format long permite utilizar la mï¿½xima capacidad del computador
 
-%Variables de entrada
 
-xi=input('Inserte intervalo mínimo: ');
-xs=input('Inserte intervalo máximo: ');
-f=input('Inserte la función: ','s');
-tol=input('Inserte la tolerancia: ');
-niter=input('Inserte iteraciones: ');
+Xi = input ('Ingrese el limite inferior del intervalo\n');
+Xs = input ('\nIngrese el limite superior del intervalo\n');
+Tol = input ('\nIngrese la tolerancia deseada\n');
+Iter = input ('\nIngrese el numero de iteraciones\n');
+Fun = input ('\nIngrese la funcion entre comillas simples\n');
 
-fx=inline(f,'x');
-fxi=fx(xi);
-fxs=fx(xs);
 
-Xi=disp(xi);
-Xs=disp(xs);
-F=disp(f);
-T=disp(tol);
-N=disp(niter);
+f = inline (Fun);%El comando inline permite hacer la asignacion posterior de variables en una funcion.
 
-printf('f(Xi) = %f. \n\n',fxi)
-printf('f(Xs) = %f. \n\n',fxs)
+Yi = f(Xi);
+Ys = f(Xs);
 
-fprintf('\n cont         xm                e \n')
-
-if fxi==0
-  printf('Xi = %i es una raíz',xi)
-elseif fxs==0
-  printf('Xs = %i es una raíz',xs)
-elseif fxi*fxs<0
-  xm=(xi-(fxi)*(xs-xi))/(fxs-fxi);
-  fxm=fx(xm);
-  cont=1;
-  e=tol+1;
-end
-
-  while (e>tol && fxm~=0) && cont<=niter
-    if fxi*fxm<0
-      xs=xm;
-      fxs=fxm;
+if Yi == 0
+    fprintf('\n\nSOLUCION:\n')
+    fprintf('Xi es raiz\n\n');
+else
+    if Ys == 0
+        fprintf('\n\nSOLUCION:\n')
+        fprintf('Xs es raiz\n\n');
     else
-      xi=xm;
-      fxi=fxm;
-     endif
-     xaux=xm;
-     xm=(xi-(fxi)*(xs-xi))/(fxs-fxi);
-     fxm=fx(xm);
-     e=abs(xm-xaux);
-     fprintf('\n %g        %10.10f          %10.10f \n',cont,xm,e)
-     cont=cont+1;
-    end  
+        if Yi*Ys < 0
+            Xm = (Xi)-((f(Xi)*(Xi-Xs))/(f(Xi)-f(Xs)));
+            Ym = f(Xm);
+            Error = Tol+1;
+            Cont = 1;
+            Z = [Cont,Xi,Xs,Xm,Ym,Error];
+            %Z es una matriz la cual permitira observar lo datos como una tabla al final del programa
+        
+            while Ym~=0 && Error>Tol && Cont<Iter
 
-  if fxm==0
-    printf('Xm = %i es una raíz',xm)
-  elseif e<tol
-    printf('Xm = %i es una aproximación a una raíz con una tolerancia de %e',xm,tol)
-  else
-    printf('Falló en %i iteraciones',niter)
-  %disp('El intervalo es inadecuado')
-  end
+                if Yi*Ym < 0
+                    Xs = Xm;
+                    Ys = Ym;
+                else
+                    Xi = Xm;
+                    Yi = Ym;
+                end
+                Xaux = Xm;
+                Xm = (Xi)-((f(Xi)*(Xi-Xs))/(f(Xi)-f(Xs)));
+                Ym = f(Xm);
+                Error = abs(Xm-Xaux)/Xm;
+                Cont = Cont+1;
+                Z(Cont,1) = Cont;
+                Z(Cont,2) = Xi;
+                Z(Cont,3) = Xs;
+                Z(Cont,4) = Xm;
+                Z(Cont,5) = Ym;
+                Z(Cont,6) = Error;
+                %las z son las posiciones asignadas en la tabla a los resultados que se observaron
 
-ezplot(f)
+            end
+            if Ym == 0
+                fprintf('\n\nSOLUCION:\n')
+                fprintf('%g es raï¿½z\n\n',Xm);
+            else
+                if Error<Tol
+                    fprintf('\n\nSOLUCION:\n')
+                    fprintf( '%g es una aproximacion a una raï¿½z con una tolerancia %g \n\n',Xm,Tol);
+                else
+                    fprintf('\n\nSOLUCION:\n')
+                    fprintf('Fracaso en %g iteraciones\n\n',Iter);
+                end
+            end
+        else
+            fprintf('\n\nSOLUCION:\n')
+            fprintf('El intervalo es inadecuado\n\n');
+        end
+    end
+end
+fprintf('TABLA\n\nIteraciones                   Xi                    Xs                   Xm                 Ym             Error Absoluto\n\n');
+disp(Z)
+ezplot(f);
+%fplot(f,[-1 10]);%Muestra la funcion graficada
+grid on %Muestra cuadricula en la grafica de la funcion
 
-grid on
+
