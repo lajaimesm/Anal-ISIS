@@ -2,7 +2,7 @@
 
 fprintf('METODO RAICES MULTIPLES\n\n\n');
 
-format long;%format long permite utilizar la m�xima capacidad del computador
+format long;%format long permite utilizar la maxima capacidad del computador
 
 
 Xo = input ('ingrese el valor inicial\n');
@@ -57,7 +57,7 @@ else
     else
         if Denominador==0
             fprintf('\n\nSOLUCION:\n')
-            fprintf('Se est� haciendo divisi�n por cero\n\n')
+            fprintf('Se esta haciendo division por cero\n\n')
         else
             fprintf('\n\nSOLUCION:\n')
             fprintf('Fracaso en %g iteraciones\n\n',Iter);
