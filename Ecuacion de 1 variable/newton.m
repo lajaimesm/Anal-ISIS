@@ -47,11 +47,11 @@ if Y1==0
 else
     if Error<Tol
         fprintf('\n\nSOLUCION:\n')
-        fprintf( '%g es una aproximacion a una ra�z con una tolerancia %g \n\n',Xo,Tol)
+        fprintf( '%g es una aproximacion a una raiz con una tolerancia %g \n\n',Xo,Tol)
     else
         if De==0
             fprintf('\n\nSOLUCION:\n')
-            fprintf('Se esta haciendo divisi�n por cero y Xo posiblemente es una raiz multiple\n\n')
+            fprintf('Se esta haciendo division por cero y Xo posiblemente es una raiz multiple\n\n')
         else
             fprintf('\n\nSOLUCION:\n')
             fprintf('Fracaso en %g iteraciones\n\n',Iter);
