@@ -2,13 +2,13 @@
 
 fprintf('METODO DE LA SECANTE\n\n\n');
 
-format long;%format long permite utilizar la m�xima capacidad del computador
+format long;%format long permite utilizar la maxima capacidad del computador
 
 Xo = input('ingrese xo\n');
 X1 = input('\ningrese x1\n');
 Tol = input('\ningrese la tolerancia\n');
-Iter = input('\ningrese el n�mero de iteraciones\n');
-Fun = input('\ningrese la funci�n entre comillas simples\n');
+Iter = input('\ningrese el numero de iteraciones\n');
+Fun = input('\ningrese la funcion entre comillas simples\n');
 
 f=inline (Fun); %El comando inline permite hacer la asignaci�n posterior de variables en una funcion
 
@@ -48,11 +48,11 @@ else
 
     if y1 == 0
         fprintf('\n\nSOLUCION:\n')
-        fprintf('%g es ra�z\n\n',X1);
+        fprintf('%g es raiz\n\n',X1);
     else
         if e < Tol
             fprintf('\n\nSOLUCION:\n')
-            fprintf( '%g es una aproximacion a una ra�z con una tolerancia %g \n\n',X1,Tol)
+            fprintf( '%g es una aproximacion a una raiz con una tolerancia %g \n\n',X1,Tol)
         else
             if d == 0
                 fprintf('\n\nSOLUCION:\n')
