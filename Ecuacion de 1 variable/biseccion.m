@@ -79,7 +79,7 @@ fprintf('TABLA\n\nIteraciones              Xi                 Xs                
 
 disp(Z);
 
-fplot(f); %Muestra la funcion graficada
+ezplot(f); %Muestra la funcion graficada
 grid on %muestra cuadricula en la grafica de la funcion
 
 
