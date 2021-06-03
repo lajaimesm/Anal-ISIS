@@ -1,7 +1,7 @@
 %REGLA FALSA
 
 fprintf('METODO REGLA FALSA\n\n\n');
-format long;%format long permite utilizar la m�xima capacidad del computador
+format long;%format long permite utilizar la maxima capacidad del computador
 
 
 Xi = input ('Ingrese el limite inferior del intervalo\n');
@@ -57,7 +57,7 @@ else
             end
             if Ym == 0
                 fprintf('\n\nSOLUCION:\n')
-                fprintf('%g es ra�z\n\n',Xm);
+                fprintf('%g es raiz\n\n',Xm);
             else
                 if Error<Tol
                     fprintf('\n\nSOLUCION:\n')
