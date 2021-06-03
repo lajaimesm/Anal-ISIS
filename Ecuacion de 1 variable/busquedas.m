@@ -1,6 +1,6 @@
 % METODO DE BUSQUEDAS INCREMENTALES
 
-format long %format long permite utilizar la m�xima capacidad del computador
+format long %format long permite utilizar la maxima capacidad del computador
 
 
 fprintf('BUSQUEDAS INCREMENTALES\n\n\n')
