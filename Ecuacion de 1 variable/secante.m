@@ -67,8 +67,8 @@ end
 fprintf('TABLA\n\ninteraciones               Xn               y1                 Error relativo\n\n');
 disp(Z1);
 disp(Z);
-%ezplot(f);
-fplot(f,[-1 15]); %Muestra la funcion graficada
+ezplot(f);%Muestra la funcion graficada
+%fplot(f,[-1 15]); %Muestra la funcion graficada
 
 
 grid on %Muestra cuadricula en la grafica de la funcion
