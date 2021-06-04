@@ -43,7 +43,7 @@ end
 
 if Y1==0
     fprintf('\n\nSOLUCION:\n')
-    fprintf('%g es ra�z\n\n',Xo);
+    fprintf('%g es raiz\n\n',Xo);
 else
     if Error<Tol
         fprintf('\n\nSOLUCION:\n')
@@ -59,7 +59,7 @@ else
     end
 end
 
-fprintf('TABLA\n\n Cont                  Xn                   f(Xn)               f�(Xn)               Error relativo\n\n');
+fprintf('TABLA\n\n Cont                  Xn                   f(Xn)               f2(Xn)               Error relativo\n\n');
 disp(Z1);
 disp(Z);
 
