@@ -1,3 +1,5 @@
+%METODO DE FACTOIZACION LU CON ELIMINACION GAUSSSINA SIMPLE 
+
 A = input('Ingrese la matriz de coeficientes A \n');
 b = input('Ingrese el vector de coeficientes b \n');
 %Matriz aumentada
