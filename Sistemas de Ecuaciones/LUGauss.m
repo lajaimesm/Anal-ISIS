@@ -1,4 +1,5 @@
-function [Fin] = LUgauss(A,b)
+A = input('Ingrese la matriz de coeficientes A \n');
+b = input('Ingrese el vector de coeficientes b \n');
 %Matriz aumentada
 [f c]=size(A);
 
