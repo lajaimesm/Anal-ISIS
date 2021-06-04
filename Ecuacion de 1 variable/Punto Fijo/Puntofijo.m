@@ -2,7 +2,7 @@
 
 fprintf('METODO PUNTO FIJO\n\n\n');
 
-format long;%format long permite utilizar la m�xima capacidad del computador
+format long;%format long permite utilizar la maxima capacidad del computador
 
 
 Xo = input('ingrese el valor inicial\n');
